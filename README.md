@@ -1,1 +1,1 @@
-# Rails RSpec Spork FactoryGirl Tutorial
+# RSpec Tutorial of the Rails
