@@ -11,12 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011083654) do
+ActiveRecord::Schema.define(version: 20141011084318) do
 
   create_table "contacts", force: true do |t|
     t.string   "firstname",  limit: 255
     t.string   "lastname",   limit: 255
     t.string   "email",      limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "phones", force: true do |t|
+    t.string   "phone_type", limit: 255
+    t.string   "phone",      limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
