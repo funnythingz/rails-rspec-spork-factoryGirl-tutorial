@@ -20,4 +20,5 @@ describe 'Phone' do
 
     expect(build(:home_phone, phone: phone_number)).to be_valid
   end
+
 end

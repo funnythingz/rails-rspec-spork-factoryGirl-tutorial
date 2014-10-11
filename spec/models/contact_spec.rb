@@ -25,7 +25,7 @@ describe 'Contact' do
   # 重複したメールアドレスなら無効な状態であること
   it 'is invalid with a duplicate email address' do
     email = Faker::Internet.email
-    create(:context, email: email)
+    create(:contact, email: email)
     contact = build(:contact, email: email)
 
     expect(contact).to have(1).errors_on(:email)
@@ -44,9 +44,9 @@ describe 'Contact' do
   describe 'filter last name by letter' do
 
     before :each do
-      @smith = Contact.create(firstname: Faker::Name.first_name, lastname: 'Smith', email: Faker::Internet.email)
-      @jones = Contact.create(firstname: Faker::Name.first_name, lastname: 'Jones', email: Faker::Internet.email)
-      @johnson = Contact.create(firstname: Faker::Name.first_name, lastname: 'Johnson', email: Faker::Internet.email)
+      @smith = create(:contact, lastname: 'Smith')
+      @jones = create(:contact, lastname: 'Jones')
+      @johnson = create(:contact, lastname: 'Johnson')
     end
 
     # マッチする文字の場合
