@@ -43,4 +43,12 @@ describe 'Contact' do
     expect(contact.fullname).to eq fullname
   end
 
+  # マッチした結果をソート済みの配列として返すこと
+  it 'returns a sorted array of results that match' do
+    smith = Contact.create(firstname: Faker::Name.first_name, lastname: 'Smith', email: Faker::Internet.email)
+    jones = Contact.create(firstname: Faker::Name.first_name, lastname: 'Jones', email: Faker::Internet.email)
+    johnson = Contact.create(firstname: Faker::Name.first_name, lastname: 'Johnson', email: Faker::Internet.email)
+
+    expect(Contact.by_letter('J')).to eq [johnson, jones]
+  end
 end
