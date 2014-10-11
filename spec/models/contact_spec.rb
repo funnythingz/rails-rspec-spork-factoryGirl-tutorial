@@ -64,4 +64,9 @@ describe 'Contact' do
     end
 
   end
+
+  # 3つの電話番号をもっていること
+  it 'has three phone numbers' do
+    expect(create(:contact).phones.count).to eq 3
+  end
 end
