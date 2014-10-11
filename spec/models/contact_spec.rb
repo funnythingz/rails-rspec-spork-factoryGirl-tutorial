@@ -40,7 +40,7 @@ describe 'Contact' do
     fullname = "#{first_name} #{last_name}"
     contact = Contact.new(firstname: first_name, lastname: last_name, email: Faker::Internet.email)
 
-    expect("#{contact.firstname} #{contact.lastname}").to eq fullname
+    expect(contact.fullname).to eq fullname
   end
 
 end
