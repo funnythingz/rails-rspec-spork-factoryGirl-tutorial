@@ -50,5 +50,6 @@ describe 'Contact' do
     johnson = Contact.create(firstname: Faker::Name.first_name, lastname: 'Johnson', email: Faker::Internet.email)
 
     expect(Contact.by_letter('J')).to eq [johnson, jones]
+    expect(Contact.by_letter('J')).to_not include smith
   end
 end
