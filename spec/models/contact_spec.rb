@@ -43,13 +43,28 @@ describe 'Contact' do
     expect(contact.fullname).to eq fullname
   end
 
-  # マッチした結果をソート済みの配列として返すこと
-  it 'returns a sorted array of results that match' do
-    smith = Contact.create(firstname: Faker::Name.first_name, lastname: 'Smith', email: Faker::Internet.email)
-    jones = Contact.create(firstname: Faker::Name.first_name, lastname: 'Jones', email: Faker::Internet.email)
-    johnson = Contact.create(firstname: Faker::Name.first_name, lastname: 'Johnson', email: Faker::Internet.email)
+  # 文字で姓をフィルタする
+  describe 'filter last name by letter' do
 
-    expect(Contact.by_letter('J')).to eq [johnson, jones]
-    expect(Contact.by_letter('J')).to_not include smith
+    before :each do
+      @smith = Contact.create(firstname: Faker::Name.first_name, lastname: 'Smith', email: Faker::Internet.email)
+      @jones = Contact.create(firstname: Faker::Name.first_name, lastname: 'Jones', email: Faker::Internet.email)
+      @johnson = Contact.create(firstname: Faker::Name.first_name, lastname: 'Johnson', email: Faker::Internet.email)
+    end
+
+    # マッチする文字の場合
+    context 'matching letters' do
+      it 'returns a sorted array of results that match' do
+        expect(Contact.by_letter('J')).to eq [@johnson, @jones]
+      end
+    end
+
+    # マッチしない文字の場合
+    context 'non matching letters' do
+      it 'returns a sorted array of results that match' do
+        expect(Contact.by_letter('J')).to_not include @smith
+      end
+    end
+
   end
 end
