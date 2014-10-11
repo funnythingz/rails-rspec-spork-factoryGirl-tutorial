@@ -4,29 +4,29 @@ describe 'Contact' do
 
   # 有効なファクトリを持つこと
   it 'has a valid factory' do
-    expect(FactoryGirl.build(:contact)).to be_valid
+    expect(build(:contact)).to be_valid
   end
 
   # 名がなければ無効な状態であること(名: 必須)
   it 'is invalid without a firstname' do
-    expect(FactoryGirl.build(:contact, firstname: nil)).to have(1).errors_on(:firstname)
+    expect(build(:contact, firstname: nil)).to have(1).errors_on(:firstname)
   end
 
   # 姓がなければ無効な状態であること(姓: 必須)
   it 'is invalid without a lastname' do
-    expect(FactoryGirl.build(:contact, lastname: nil)).to have(1).errors_on(:lastname)
+    expect(build(:contact, lastname: nil)).to have(1).errors_on(:lastname)
   end
 
   # メールアドレスがなければ無効な状態であること(メールアドレス: 必須)
   it 'is invalid without an email address' do
-    expect(FactoryGirl.build(:contact, email: nil)).to have(1).errors_on(:email)
+    expect(build(:contact, email: nil)).to have(1).errors_on(:email)
   end
 
   # 重複したメールアドレスなら無効な状態であること
   it 'is invalid with a duplicate email address' do
     email = Faker::Internet.email
-    FactoryGirl.create(:context, email: email)
-    contact = FactoryGirl.build(:contact, email: email)
+    create(:context, email: email)
+    contact = build(:contact, email: email)
 
     expect(contact).to have(1).errors_on(:email)
   end
@@ -35,7 +35,7 @@ describe 'Contact' do
   it "returns a contact's full name as a string" do
     first_name = Faker::Name.first_name
     last_name = Faker::Name.last_name
-    contact = FactoryGirl.build(:contact, lastname: last_name, firstname: first_name)
+    contact = build(:contact, lastname: last_name, firstname: first_name)
 
     expect(contact.fullname).to eq "#{first_name} #{last_name}"
   end
