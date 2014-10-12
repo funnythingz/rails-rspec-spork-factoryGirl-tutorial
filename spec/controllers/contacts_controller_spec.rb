@@ -62,6 +62,13 @@ describe ContactsController do
     it 'renders the :show template' do
       expect(response).to render_template :show
     end
+
+    # 電話番号用の:show テンプレートを表示すること
+    it 'renders the :show template for the phone' do
+      phone = create(:phone, contact: @contact)
+      get :show, id: phone, contact_id: @contact.id
+      expect(response).to render_template :show
+    end
   end
 
   describe 'GET #new' do
