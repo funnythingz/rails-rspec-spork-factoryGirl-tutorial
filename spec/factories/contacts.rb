@@ -13,9 +13,9 @@ FactoryGirl.define do
         contact.phones << FactoryGirl.build(:phone, phone_type: phone, contact: contact)
       end
     end
-  end
 
-  factory :invalid_contact do
-    firstname nil
+    factory :invalid_contact do
+      firstname nil
+    end
   end
 end
