@@ -239,12 +239,12 @@ describe ContactsController do
   end
 
   # CSVのテスト
-  descrive 'CSV output' do
+  describe 'CSV output' do
     # CSV ファイルを返すこと
     it 'returns a CSV file' do
       get :index, format: :csv
 
-      expect(response.headers[]'Content-Type').to have_content 'text/csv'
+      expect(response.headers['Content-Type']).to have_content 'text/csv'
     end
 
     before :each do
