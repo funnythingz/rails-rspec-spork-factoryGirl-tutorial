@@ -6,16 +6,25 @@ describe ContactsController do
 
     # params[:letter] がある場合
     context 'with params[:letter]' do
+
+      before :each do
+        @smith = create(:contact, lastname: 'Smith')
+        @jones = create(:contact, lastname: 'Jones')
+      end
+
       # すべての連絡先を配列にまとめること
-      it 'populates an array of all contacts'
+      it 'populates an array of all contacts' do
+        get :index
+
+        expect(assigns(:contacts)).to match_array([@smith, @jones])
+
+      end
 
       # 指定された文字で始まる連絡先を配列にまとめること
       it 'populates an array of contacts starting with the letter' do
-        smith = create(:contact, lastname: 'Smith')
-        jones = create(:contact, lastname: 'Jones')
         get :index, letter: 'S'
 
-        expect(assigns(:contacts)).to match_array([smith])
+        expect(assigns(:contacts)).to match_array([@smith])
       end
 
       # index テンプレートを表示すること
@@ -50,16 +59,17 @@ describe ContactsController do
 
     before :each do
       @contact = create(:contact)
-      get :show, id: @contact
     end
 
     # @contact に要求された連絡先を割り当てること
     it 'assigns the requested contact to @contact' do
+      get :show, id: @contact
       expect(assigns(:contact)).to eq @contact
     end
 
     # :show テンプレートを表示すること
     it 'renders the :show template' do
+      get :show, id: @contact
       expect(response).to render_template :show
     end
 
@@ -91,16 +101,17 @@ describe ContactsController do
 
     before :each do
       @contact = create(:contact)
-      get :show, id: @contact
     end
 
     # @contact に要求された連絡先を割り当てること
     it 'assigns the requested contact to @contact' do
+      get :edit, id: @contact
       expect(assigns(:contact)).to eq @contact
     end
 
     # :edit テンプレートを表示すること
     it 'renders the :edit template' do
+      get :edit, id: @contact
       expect(response).to render_template :edit
     end
   end
@@ -265,6 +276,7 @@ describe ContactsController do
 
   # JSONのテスト
   it 'returns JSON-formatted content' do
+    contact = create(:contact)
     get :index, format: :json
 
     expect(response.body).to have_content contact.to_json
