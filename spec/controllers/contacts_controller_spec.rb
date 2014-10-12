@@ -142,22 +142,51 @@ describe ContactsController do
   end
 
   describe 'PATCH #update' do
+
+    before :each do
+      @contact = create(:contact, firstname: 'Large', lastname: 'Unko')
+    end
+
     # 有効な属性の場合
     context 'with valid attributes' do
-      # データベースの連絡先を更新すること
-      it 'updates the contact in the database'
+      # 要求された @contact を取得すること
+      it 'locates the requested @contact' do
+        patch :update, id: @contact, contact: attributes_for(:contact)
+        expect(assigns(:contact)).to eq(@contact)
+      end
+
+      # @contact の属性を更新すること
+      it 'updates the contact in the database' do
+        patch :update, id: @contact, contact: attributes_for(:contact, firstname: 'Small')
+        @contact.reload
+
+        expect(@contact.firstname).to eq 'Small'
+      end
 
       # 更新した連絡先のページへリダイレクトすること
-      it 'redirects to the contact'
+      it 'redirects to the update contact' do
+        patch :update, id: @contact, contact: attributes_for(:contact)
+
+        expect(response).to redirect_to @contact
+      end
     end
 
     # 無効な属性の場合
     context 'with invalid attributes' do
       # 連絡先を更新しないこと
-      it 'does not update the contact'
+      it "does not update the contact's attributes" do
+        patch :update, id: @contact, contact: attributes_for(:contact, lastname: nil)
+        @contact.reload
+
+        expect(@contact.lastname).to eq 'Unko'
+      end
 
       # :edit テンプレートを再表示すること
-      it 're-renders the :edit template'
+      it 're-renders the :edit template' do
+        patch :update, id: @contact, contact: attributes_for(:invalid_contact)
+
+        expect(response).to render_template :edit
+      end
     end
   end
 
