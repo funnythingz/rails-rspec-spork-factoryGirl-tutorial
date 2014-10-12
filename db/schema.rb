@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011100143) do
+ActiveRecord::Schema.define(version: 20141012121554) do
 
   create_table "contacts", force: true do |t|
     t.string   "firstname",  limit: 255
@@ -30,5 +30,12 @@ ActiveRecord::Schema.define(version: 20141011100143) do
   end
 
   add_index "phones", ["contact_id"], name: "index_phones_on_contact_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "email",           limit: 255
+    t.string   "password_digest", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
 
 end
