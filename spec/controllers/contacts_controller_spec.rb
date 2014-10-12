@@ -232,19 +232,16 @@ describe ContactsController do
   describe 'PATCH hide_contact' do
     before :each do
       @contact = create(:contact)
+      patch :hide_contact, id: @contact
     end
 
     # 連絡先を hidden 状態にすること
     it 'marks the contact as hidden' do
-      patch :hide_contact, id: @contact
-
       expect(@contact.reload.hidden?).to be_true
     end
 
     # contact#index にリダイレクトすること
     it 'redirects to contacts#index' do
-      patch :hide_contact, id: @contact
-
       expect(response).to redirect_to contacts_url
     end
   end
