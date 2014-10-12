@@ -236,6 +236,37 @@ describe ContactsController do
 
       expect(response).to redirect_to contacts_url
     end
+  end
 
+  # CSVのテスト
+  descrive 'CSV output' do
+    # CSV ファイルを返すこと
+    it 'returns a CSV file' do
+      get :index, format: :csv
+
+      expect(response.headers[]'Content-Type').to have_content 'text/csv'
+    end
+
+    before :each do
+      @contact = create(:contact, firstname: 'Daisuki', lastname: 'Unko', email: 'unko@unko.unko')
+    end
+
+    # 中身を返すこと
+    it 'returns content' do
+      get :index, format: :csv
+      expect(response.body).to have_content 'Daisuki Unko,unko@unko.unko'
+    end
+
+    # カンマ区切りの値を返すこと
+    it 'returns comma separated values' do
+      expect(Contact.to_csv).to match /Daisuki Unko,unko@unko.unko/
+    end
+  end
+
+  # JSONのテスト
+  it 'returns JSON-formatted content' do
+    get :index, format: :json
+
+    expect(response.body).to have_content contact.to_json
   end
 end
